@@ -1,13 +1,14 @@
-import { Smile } from "lucide-react";
+
 import { Slider } from "@/components/ui/slider"
 import { useContext, useEffect, useState } from "react";
 import ColorPickerController from "./ColorPickerController"
 import { updateStorageContext } from "@/context/UpdateStorageContext";
+import IconList from "../IconList";
 function IconController() {
-    const [size, setSize] = useState(280)
-    const [rotate, setRotate] = useState(0)
+  const storageValue = JSON.parse(localStorage.getItem("value"))
+    const [size, setSize] = useState(storageValue? storageValue?.iconSize : 280)
+    const [rotate, setRotate] = useState(storageValue? storageValue?.iconRotate : 0)
     const [color, setColor] = useState("#fff")
-    const storageValue = JSON.parse(localStorage.getItem("value"))
     const { setUpdateStorage} = useContext(updateStorageContext)
     useEffect(()=>{
 const updatedValue = {
@@ -15,7 +16,7 @@ const updatedValue = {
     iconSize:size,
     iconRotate:rotate,
     iconColor:color,
-    icon:"smile"
+    icon:"Smile"
 }
 setUpdateStorage(updatedValue)
 localStorage.setItem("value", JSON.stringify(updatedValue))
@@ -23,19 +24,16 @@ localStorage.setItem("value", JSON.stringify(updatedValue))
   return (
     <div>
       <div>
-        <label>Icon</label>
-        <div className="p-3 cursor-pointer my-2 bg-gray-200 rounded-md w-[50px] h-[50px] flex items-center justify-center">
-          <Smile />
-        </div>
+       <IconList/>
         <div className="py-2">
             <label className="p-2 flex justify-between items-center">Size <span>{size}px</span></label>
-            <Slider defaultValue={[280]} max={512} step={1} 
+            <Slider defaultValue={[size]} max={512} step={1} 
             onValueChange={(event) => setSize(event[0])}
             />
         </div>
         <div className="py-2">
             <label className="p-2 flex justify-between items-center">Rotate <span>{rotate}º</span></label>
-            <Slider defaultValue={[0]} max={360} step={1} 
+            <Slider defaultValue={[rotate]} max={360} step={1} 
             onValueChange={(event) => setRotate(event[0])}
             />
         </div>

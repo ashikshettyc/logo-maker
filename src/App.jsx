@@ -23,10 +23,9 @@ function App() {
         <div className="md:col-span-3">
          <LogoPreview/>
         </div>
-        <div className="">
           Ads banner
         </div>
-      </div>
+      
       </updateStorageContext.Provider>
   );
 }
