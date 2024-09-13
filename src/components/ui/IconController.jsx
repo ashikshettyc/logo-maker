@@ -8,7 +8,8 @@ function IconController() {
   const storageValue = JSON.parse(localStorage.getItem("value"))
     const [size, setSize] = useState(storageValue? storageValue?.iconSize : 280)
     const [rotate, setRotate] = useState(storageValue? storageValue?.iconRotate : 0)
-    const [color, setColor] = useState("#fff")
+    const [color, setColor] = useState(storageValue? storageValue?.iconColor : "#fff")
+    const [icon, setIcon] = useState(storageValue? storageValue?.icon : "Smile")
     const { setUpdateStorage} = useContext(updateStorageContext)
     useEffect(()=>{
 const updatedValue = {
@@ -16,15 +17,15 @@ const updatedValue = {
     iconSize:size,
     iconRotate:rotate,
     iconColor:color,
-    icon:"Smile"
+    icon:icon
 }
 setUpdateStorage(updatedValue)
 localStorage.setItem("value", JSON.stringify(updatedValue))
-    },[size, rotate, color, storageValue])
+    },[size, rotate, color, storageValue, icon])
   return (
     <div>
       <div>
-       <IconList/>
+       <IconList selectedIcon={(icon) => setIcon(icon)}/>
         <div className="py-2">
             <label className="p-2 flex justify-between items-center">Size <span>{size}px</span></label>
             <Slider defaultValue={[size]} max={512} step={1} 
